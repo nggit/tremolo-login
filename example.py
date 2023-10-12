@@ -28,9 +28,9 @@ async def login(request=None, **server):
 
     if request.method == b'POST':
         form_data = await request.form()
-        password = form_data['password'][0]
 
-        if 'password' in form_data and compare_digest(password, 'mypass'):
+        if ('password' in form_data and
+                compare_digest(form_data['password'][0], 'mypass')):
             # password match! set current session as logged in
             session.login()
             return b'Login success! Go to <a href="/">Dashboard</a>.'
