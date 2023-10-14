@@ -26,14 +26,10 @@ app = Tremolo()
 # session middleware
 sess = Session(app)
 
-_DIGEST = hmac.new(
-    b'5e55',
-    msg=b'UA',
-    digestmod=hashlib.sha256
-).hexdigest()
+_DIGEST = hmac.new(b'5e55', msg=b'UA', digestmod=hashlib.sha256).hexdigest()
 
 
-@app.on_start
+@app.on_worker_start
 async def worker_start(**_):
     # create file /tmp/tremolo-sess/5e55
     with open(os.path.join(sess.path, '5e55'), 'w') as fp:
