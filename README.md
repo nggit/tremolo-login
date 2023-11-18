@@ -61,7 +61,7 @@ async def logout(request=None, response=None, **server):
     return b''
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', 8000, debug=True)
+    app.run('0.0.0.0', 8000, debug=True, reload=True)
 ```
 
 ## Installing

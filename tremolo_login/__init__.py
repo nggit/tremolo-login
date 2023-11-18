@@ -1,5 +1,6 @@
 # Copyright (c) 2023 nggit
 
+__version__ = '1.0.2'
 __all__ = ('Session',)
 
 import hashlib  # noqa: E402
