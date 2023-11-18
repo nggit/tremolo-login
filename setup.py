@@ -2,18 +2,12 @@
 
 from setuptools import setup
 
-if __name__ == '__main__':
-    import sys
-
-    if len(sys.argv) == 1:
-        sys.argv.append('install')
-
 with open('README.md', 'r') as f:
     long_description = f.read()
 
 setup(
     name='tremolo-login',
-    version='1.0.1',
+    version='1.0.2',
     license='MIT',
     author='nggit',
     author_email='contact@anggit.com',
