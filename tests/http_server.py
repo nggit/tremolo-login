@@ -41,7 +41,7 @@ async def my_request_middleware(request=None, **_):
     session = request.context.session
 
     if session is not None:
-        if 'id=5e55&expires=' not in request.cookies['sess'][0]:
+        if '5e55.' not in request.cookies['sess'][0]:
             session.login()
             assert session.is_logged_in() is True
 
@@ -64,7 +64,7 @@ async def my_response_middleware(request=None, response=None, **_):
     session = request.context.session
 
     if session is not None:
-        if 'id=5e55&expires=' in request.cookies['sess'][0]:
+        if '5e55.' in request.cookies['sess'][0]:
             session.destroy()
 
 if __name__ == '__main__':
