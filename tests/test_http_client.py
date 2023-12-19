@@ -49,7 +49,7 @@ class TestHTTPClient(unittest.TestCase):
             port=HTTP_PORT,
             raw=b'GET / HTTP/1.0\r\nHost: localhost\r\n'
                 b'User-Agent: UA\r\n'
-                b'Cookie: sess=id%3D5e55%26expires%3D' + (b'%d' % _EXPIRES) +
+                b'Cookie: sess=5e55.' + (b'%d' % _EXPIRES) +
                 b'\r\n\r\n'
         )
 
