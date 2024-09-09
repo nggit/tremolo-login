@@ -1,0 +1,32 @@
+[build-system]
+requires = [ 'setuptools>=61.0', 'wheel' ]
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'tremolo-login'
+authors = [
+    { name = 'nggit', email = 'contact@anggit.com' },
+]
+description = 'tremolo-login is basically an extension of tremolo-session.'
+requires-python = '>=3.6'
+dependencies = [
+    'tremolo_session',
+]
+license = { text = 'MIT License' }
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Topic :: Software Development :: Libraries :: Application Frameworks',
+]
+dynamic = [ 'version', 'readme' ]
+
+[project.urls]
+Homepage = 'https://github.com/nggit/tremolo-login'
+Source = 'https://github.com/nggit/tremolo-login'
+Funding = 'https://github.com/sponsors/nggit'
+
+[tool.setuptools.dynamic]
+version = { attr = 'tremolo_login.__version__' }
+readme = { file = 'README.md', content-type = 'text/markdown' }

@@ -1,4 +1,7 @@
 # tremolo-login
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nggit_tremolo-login&metric=coverage)](https://sonarcloud.io/summary/new_code?id=nggit_tremolo-login)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nggit_tremolo-login&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nggit_tremolo-login)
+
 tremolo-login is basically an extension of [tremolo-session](https://github.com/nggit/tremolo-session).
 
 You can use it just like tremolo-session but with additional methods like `login()`, `logout()`, and `is_logged_in()`.
@@ -15,13 +18,13 @@ from tremolo_login import Session
 app = Tremolo()
 
 # this is a session middleware
-# that enables you to use context.session or request.context.session
+# that enables you to use context.session or request.ctx.session
 Session(app, expires=1800)
 
 
 @app.route('/')
 async def index(request=None, **server):
-    session = request.context.session
+    session = request.ctx.session
 
     if session is None or not session.is_logged_in():
         return b'You are not logged in. <a href="/login">Login</a>.'
@@ -31,7 +34,7 @@ async def index(request=None, **server):
 
 @app.route('/login')
 async def login(request=None, **server):
-    session = request.context.session
+    session = request.ctx.session
 
     if request.method == b'POST':
         form_data = await request.form()
@@ -51,7 +54,7 @@ async def login(request=None, **server):
 
 @app.route('/logout')
 async def logout(request=None, response=None, **server):
-    session = request.context.session
+    session = request.ctx.session
 
     session.logout()
 
@@ -59,6 +62,7 @@ async def logout(request=None, response=None, **server):
     response.set_header(b'Location', b'/')
 
     return b''
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8000, debug=True, reload=True)
@@ -70,16 +74,16 @@ python3 -m pip install --upgrade tremolo_login
 ```
 
 ## Testing
-Just run `python3 alltests.py`.
+Just run `python3 -m tests`.
 
 Or if you also want measurements with [coverage](https://coverage.readthedocs.io/):
 
 ```
-coverage run alltests.py
+coverage run -m tests
 coverage combine
 coverage report
 coverage html # to generate html reports
 ```
 
 ## License
-MIT
+MIT License
