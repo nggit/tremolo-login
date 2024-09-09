@@ -8,13 +8,13 @@ from tremolo_login import Session
 app = Tremolo()
 
 # this is a session middleware
-# that enables you to use context.session or request.context.session
+# that enables you to use context.session or request.ctx.session
 Session(app, expires=1800)
 
 
 @app.route('/')
 async def index(request=None, **server):
-    session = request.context.session
+    session = request.ctx.session
 
     if session is None or not session.is_logged_in():
         return b'You are not logged in. <a href="/login">Login</a>.'
@@ -24,7 +24,7 @@ async def index(request=None, **server):
 
 @app.route('/login')
 async def login(request=None, **server):
-    session = request.context.session
+    session = request.ctx.session
 
     if request.method == b'POST':
         form_data = await request.form()
@@ -44,7 +44,7 @@ async def login(request=None, **server):
 
 @app.route('/logout')
 async def logout(request=None, response=None, **server):
-    session = request.context.session
+    session = request.ctx.session
 
     session.logout()
 
@@ -52,6 +52,7 @@ async def logout(request=None, response=None, **server):
     response.set_header(b'Location', b'/')
 
     return b''
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8000, debug=True, reload=True)

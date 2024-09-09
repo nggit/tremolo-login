@@ -9,10 +9,7 @@ import os  # noqa: E402
 import sys  # noqa: E402
 
 # makes imports relative from the repo directory
-sys.path.insert(
-    0,
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from tremolo import Tremolo  # noqa: E402
 from tremolo.exceptions import Forbidden  # noqa: E402
@@ -37,8 +34,8 @@ async def worker_start(**_):
 
 
 @app.on_request
-async def my_request_middleware(request=None, **_):
-    session = request.context.session
+async def request_middleware(request=None, **_):
+    session = request.ctx.session
 
     if session is not None:
         if '5e55.' not in request.cookies['sess'][0]:
@@ -60,12 +57,13 @@ async def index(context=None, response=None, **_):
 
 
 @app.on_response
-async def my_response_middleware(request=None, response=None, **_):
-    session = request.context.session
+async def response_middleware(request=None, response=None, **_):
+    session = request.ctx.session
 
     if session is not None:
         if '5e55.' in request.cookies['sess'][0]:
             session.destroy()
+
 
 if __name__ == '__main__':
     app.run(HTTP_HOST, port=HTTP_PORT, debug=True)
