@@ -10,7 +10,7 @@ authors = [
 description = 'tremolo-login is basically an extension of tremolo-session.'
 requires-python = '>=3.6'
 dependencies = [
-    'tremolo_session',
+    'tremolo_session>=1.0.8',
 ]
 license = { text = 'MIT License' }
 classifiers = [

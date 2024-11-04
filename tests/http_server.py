@@ -23,14 +23,14 @@ app = Tremolo()
 # session middleware
 sess = Session(app)
 
-_DIGEST = hmac.new(b'5e55', msg=b'UA', digestmod=hashlib.sha256).hexdigest()
+_SIGNATURE = hmac.new(b'5e55', msg=b'UA', digestmod=hashlib.sha256).hexdigest()
 
 
 @app.on_worker_start
 async def worker_start(**_):
     # create file /tmp/tremolo-sess/5e55
     with open(os.path.join(sess.path, '5e55'), 'w') as fp:
-        json.dump({'_login': _DIGEST}, fp)
+        json.dump({'_login': _SIGNATURE}, fp)
 
 
 @app.on_request
@@ -62,7 +62,7 @@ async def response_middleware(request=None, response=None, **_):
 
     if session is not None:
         if '5e55.' in request.cookies['sess'][0]:
-            session.destroy()
+            session.delete()
 
 
 if __name__ == '__main__':

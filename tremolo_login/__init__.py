@@ -1,6 +1,6 @@
 # Copyright (c) 2023 nggit
 
-__version__ = '1.0.4'
+__version__ = '1.0.5'
 __all__ = ('Session',)
 
 import hashlib  # noqa: E402
@@ -12,7 +12,7 @@ Session = tremolo_session.Session
 
 
 class SessionData(tremolo_session.SessionData):
-    def get_digest(self):
+    def get_signature(self):
         try:
             return hmac.digest(
                 self.id.encode('latin-1'),
@@ -38,7 +38,7 @@ class SessionData(tremolo_session.SessionData):
         if '_login' not in self:
             return False
 
-        return hmac.compare_digest(self['_login'], self.get_digest())
+        return hmac.compare_digest(self['_login'], self.get_signature())
 
 
 tremolo_session.SessionData = SessionData
