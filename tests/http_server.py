@@ -23,7 +23,9 @@ app = Tremolo()
 # session middleware
 sess = Session(app)
 
-_SIGNATURE = hmac.new(b'5e55', msg=b'UA', digestmod=hashlib.sha256).hexdigest()
+_SIGNATURE = hmac.new(
+    bytes.fromhex('5e55'), msg=b'UA', digestmod=hashlib.sha256
+).hexdigest()
 
 
 @app.on_worker_start
