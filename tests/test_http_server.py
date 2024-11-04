@@ -22,7 +22,7 @@ _EXPIRES = time.time() + 1800
 
 class TestHTTPClient(unittest.TestCase):
     def setUp(self):
-        print('[', self.id(), ']')
+        print('\r\n[', self.id(), ']')
 
     def test_get_forbidden(self):
         header, body = getcontents(host=HTTP_HOST,
