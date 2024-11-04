@@ -1,6 +1,6 @@
 # Copyright (c) 2023 nggit
 
-__version__ = '1.0.5'
+__version__ = '1.0.6'
 __all__ = ('Session',)
 
 import hashlib  # noqa: E402
@@ -15,12 +15,13 @@ class SessionData(tremolo_session.SessionData):
     def get_signature(self):
         try:
             return hmac.digest(
-                self.id.encode('latin-1'),
+                bytes.fromhex(self.id),
                 self.request.headers.get(b'user-agent', b''),
-                hashlib.sha256).hex()
+                hashlib.sha256
+            ).hex()
         except AttributeError:
             return hmac.new(
-                self.id.encode('latin-1'),
+                bytes.fromhex(self.id),
                 msg=self.request.headers.get(b'user-agent', b''),
                 digestmod=hashlib.sha256
             ).hexdigest()
