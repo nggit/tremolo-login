@@ -48,7 +48,7 @@ jobs:
 
       - name: Run tests
         run: python -m tests
-        if: ${{ matrix.python_version != '3.12' }}
+        if: ${{ matrix.python_version != '3.13' }}
 
       - name: Run tests with coverage
         run: |
