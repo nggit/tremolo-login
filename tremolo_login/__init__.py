@@ -1,6 +1,6 @@
 # Copyright (c) 2023 nggit
 
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 __all__ = ('Session',)
 
 import hashlib  # noqa: E402
@@ -27,7 +27,7 @@ class SessionData(tremolo_session.SessionData):
             ).hexdigest()
 
     def login(self):
-        self['_login'] = self.get_digest()
+        self['_login'] = self.get_signature()
 
         return self['_login']
 
