@@ -12,18 +12,18 @@ You can use it just like tremolo-session but with additional methods like `login
 
 from hmac import compare_digest
 
-from tremolo import Tremolo
+from tremolo import Application
 from tremolo_login import Session
 
-app = Tremolo()
+app = Application()
 
 # this is a session middleware
-# that enables you to use context.session or request.ctx.session
+# that enables you to use request.ctx.session
 Session(app, expires=1800)
 
 
 @app.route('/')
-async def index(request=None, **server):
+async def index(request, **server):
     session = request.ctx.session
 
     if session is None or not session.is_logged_in():
@@ -33,7 +33,7 @@ async def index(request=None, **server):
 
 
 @app.route('/login')
-async def login(request=None, **server):
+async def login(request, **server):
     session = request.ctx.session
 
     if request.method == b'POST':
@@ -53,7 +53,7 @@ async def login(request=None, **server):
 
 
 @app.route('/logout')
-async def logout(request=None, response=None, **server):
+async def logout(request, response, **server):
     session = request.ctx.session
 
     session.logout()
