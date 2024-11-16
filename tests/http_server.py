@@ -11,14 +11,14 @@ import sys  # noqa: E402
 # makes imports relative from the repo directory
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from tremolo import Tremolo  # noqa: E402
+from tremolo import Application  # noqa: E402
 from tremolo.exceptions import Forbidden  # noqa: E402
 from tremolo_login import Session  # noqa: E402
 
 HTTP_HOST = '127.0.0.1'
 HTTP_PORT = 28000
 
-app = Tremolo()
+app = Application()
 
 # session middleware
 sess = Session(app)
@@ -36,7 +36,7 @@ async def worker_start(**_):
 
 
 @app.on_request
-async def request_middleware(request=None, **_):
+async def request_middleware(request, **_):
     session = request.ctx.session
 
     if session is not None:
@@ -49,8 +49,8 @@ async def request_middleware(request=None, **_):
 
 
 @app.route('/')
-async def index(context=None, response=None, **_):
-    session = context.session
+async def index(request, response, **_):
+    session = request.ctx.session
 
     if session is None or not session.is_logged_in():
         raise Forbidden
@@ -59,7 +59,7 @@ async def index(context=None, response=None, **_):
 
 
 @app.on_response
-async def response_middleware(request=None, response=None, **_):
+async def response_middleware(request, response, **_):
     session = request.ctx.session
 
     if session is not None:
