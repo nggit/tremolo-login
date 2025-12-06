@@ -32,9 +32,7 @@ class Session:
         """
         self.name = name
         self.path = self._get_path(path, app.__class__.__name__)
-        self.paths = [
-            v.rstrip('/').encode('latin-1') + b'/' for v in paths
-        ]
+        self.paths = {v.rstrip('/').encode('latin-1') for v in paths}
         self.expires = min(expires, 31968000)
 
         # overwrite to maximum cookie validity (400 days)
@@ -79,13 +77,22 @@ class Session:
 
     async def _on_request(self, request, response, **_):
         request.ctx.session = None
+        path = request.path.rstrip(b'/')
+        depth = 0
 
-        if self.paths:
-            for path in self.paths:
-                if (request.path + b'/').startswith(path):
-                    break
-            else:
+        while depth < 255:
+            if not self.paths or path in self.paths:
+                break
+
+            end = path.rfind(b'/')
+
+            if end == -1:
                 return
+
+            path = path[:end]
+            depth += 1
+        else:
+            return
 
         response.set_header(b'Cache-Control', b'no-cache, must-revalidate')
         response.set_header(b'Expires', b'Thu, 01 Jan 1970 00:00:00 GMT')
@@ -96,7 +103,7 @@ class Session:
 
         try:
             session_id, expires = request.cookies[self.name][0].split('.', 1)
-            int(session_id, 16)
+            bytes.fromhex(session_id)
 
             expires = int(expires)
         except (KeyError, ValueError) as exc:
