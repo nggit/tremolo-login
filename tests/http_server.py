@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-__all__ = ('app', 'HTTP_HOST', 'HTTP_PORT')
-
-import hashlib  # noqa: E402
-import hmac  # noqa: E402
-import json  # noqa: E402
-import os  # noqa: E402
-import sys  # noqa: E402
+import hashlib
+import hmac
+import json
+import os
+import sys
 
 # makes imports relative from the repo directory
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -19,6 +17,8 @@ HTTP_HOST = '127.0.0.1'
 HTTP_PORT = 28000
 
 app = Application()
+
+__all__ = ['app', 'HTTP_HOST', 'HTTP_PORT']
 
 # session middleware
 sess = Session(app)
