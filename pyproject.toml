@@ -1,5 +1,5 @@
 [build-system]
-requires = [ 'setuptools>=61.0', 'wheel' ]
+requires = [ 'setuptools>=77.0.0', 'wheel' ]
 build-backend = 'setuptools.build_meta'
 
 [project]
@@ -10,13 +10,13 @@ authors = [
 description = 'tremolo-login is basically an extension of tremolo-session.'
 requires-python = '>=3.6'
 dependencies = [
-    'tremolo>=0.4.8',
+    'tremolo>=0.5.0',
 ]
-license = { text = 'MIT License' }
+license = 'MIT'
+license-files = [ 'LICENSE' ]
 classifiers = [
     'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent',
     'Topic :: Software Development :: Libraries :: Application Frameworks',
 ]
@@ -26,6 +26,9 @@ dynamic = [ 'version', 'readme' ]
 Homepage = 'https://github.com/nggit/tremolo-login'
 Source = 'https://github.com/nggit/tremolo-login'
 Funding = 'https://github.com/sponsors/nggit'
+
+[tool.setuptools]
+packages = [ 'tremolo_login' ]
 
 [tool.setuptools.dynamic]
 version = { attr = 'tremolo_login.__version__' }
