@@ -31,8 +31,11 @@ async def login(request, **server):
 
         if ('password' in form_data and
                 compare_digest(form_data['password'][0], 'mypass')):
-            # password match! set current session as logged in
+            # password match! set current session as logged in:
             session.login()
+            # the return value is a `token`, if you want to use
+            # `Authorization: Bearer <token>`
+
             return b'Login success! Go to <a href="/">Dashboard</a>.'
 
     return (b'<form action="/login" method="post"><div>'
@@ -47,6 +50,10 @@ async def logout(request, response, **server):
     session = request.ctx.session
 
     session.logout()
+
+    # if you want the session data to be deleted:
+    # the session id will also rotate on the next login
+    # session.delete()
 
     response.set_status(302, b'Found')
     response.set_header(b'Location', b'/')
