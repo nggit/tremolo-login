@@ -10,9 +10,9 @@ import time
 
 from base64 import b64decode, urlsafe_b64encode as b64encode
 
-from tremolo.exceptions import BadRequest, Forbidden
+from tremolo.exceptions import Forbidden
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 __all__ = ['Session']
 
 
@@ -109,8 +109,8 @@ class Session:
         if b'authorization' in request.headers:
             p, _, token = request.headers[b'authorization'][0].partition(b' ')
 
-            if p.lower() != b'bearer':
-                raise BadRequest('missing Bearer prefix')
+            if p.decode('latin-1').lower() != self.name:
+                return
 
             session_id = token[:-64].lstrip(b' /').decode('latin-1')
             sid = token[-64:].decode('latin-1')

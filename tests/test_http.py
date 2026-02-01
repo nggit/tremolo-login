@@ -50,7 +50,7 @@ class TestHTTP(unittest.TestCase):
             self.assertEqual(response.message, b'OK')
             self.assertEqual(response.body(), b'OK')
 
-    def test_get_ok_auth_bearer(self):
+    def test_get_ok_auth_sess(self):
         with self.client:
             response = self.client.send(
                 b'GET /login HTTP/1.1',
@@ -66,23 +66,23 @@ class TestHTTP(unittest.TestCase):
 
             response = self.client.send(
                 b'GET /login HTTP/1.0',
-                b'Authorization: Bearer  %s ' % token
+                b'Authorization: sess  %s ' % token
             )
 
             self.assertEqual(response.status, 200)
             self.assertEqual(response.message, b'OK')
             self.assertEqual(response.body(), b'OK')
 
-    def test_get_missing_bearer_prefix(self):
+    def test_get_missing_sess_prefix(self):
         with self.client:
             response = self.client.send(
                 b'GET /login HTTP/1.0',
                 b'Authorization: Basic token'
             )
 
-            self.assertEqual(response.status, 400)
-            self.assertEqual(response.message, b'Bad Request')
-            self.assertEqual(response.body(), b'missing Bearer prefix')
+            self.assertEqual(response.status, 200)
+            self.assertEqual(response.message, b'OK')
+            self.assertEqual(response.body(), b'None')
 
     def test_get_ok_no_setcookie(self):
         with self.client:

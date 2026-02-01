@@ -34,7 +34,7 @@ async def login(request, **server):
             # password match! set current session as logged in:
             session.login()
             # the return value is a `token`, if you want to use
-            # `Authorization: Bearer <token>`
+            # `Authorization: sess <token>`
 
             return b'Login success! Go to <a href="/">Dashboard</a>.'
 

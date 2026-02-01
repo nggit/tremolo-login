@@ -6,6 +6,11 @@ tremolo-login is basically an extension of [tremolo-session](https://github.com/
 
 You can use it just like tremolo-session but with additional methods like `login()`, `logout()`, and `is_logged_in()`.
 
+## Installation
+```
+python3 -m pip install --upgrade tremolo_login
+```
+
 ## Usage
 ```python
 #!/usr/bin/env python3
@@ -44,7 +49,7 @@ async def login(request, **server):
             # password match! set current session as logged in:
             session.login()
             # the return value is a `token`, if you want to use
-            # `Authorization: Bearer <token>`
+            # `Authorization: sess <token>`
 
             return b'Login success! Go to <a href="/">Dashboard</a>.'
 
@@ -73,11 +78,6 @@ async def logout(request, response, **server):
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8000, debug=True, reload=True)
-```
-
-## Installing
-```
-python3 -m pip install --upgrade tremolo_login
 ```
 
 ## Testing
